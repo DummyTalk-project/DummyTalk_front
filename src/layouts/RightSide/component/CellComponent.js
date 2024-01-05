@@ -73,7 +73,7 @@ const CellComponent = () => {
         console.log("searchQuery", searchQuery);
         try {
             const response = await axios.get(
-                `http://localhost:8000/api/image/searcb/${channelId}/${searchQuery}`// FastAPI 엔드포인트로 변경
+                `http://localhost:8000/api/image/search/${channelId}/${searchQuery}`// FastAPI 엔드포인트로 변경
             );
             console.log("Response from FastAPI: ", response);
             if (response.status === 200) {
