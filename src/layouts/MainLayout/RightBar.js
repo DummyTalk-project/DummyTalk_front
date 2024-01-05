@@ -16,7 +16,7 @@ const RightBar = ({isOpen}) => {
     const { socket } = useSocket()
 
     const components = {
-        image: <CellCo mponent />,
+        image: <CellComponent mponent />,
         text: <TextSearchComponent />,
         summary: <SummaryComponent />
     }
