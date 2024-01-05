@@ -32,10 +32,11 @@ const SummaryComponent = () => {
         <div className="w-full">
             {/* 요약  */}
             <div id="summary-display">
-                <h2 className="text-white text-center">요약 목록</h2>
+                <h2 className="text-white text-center text-lg">요약 목록</h2>
+                <div className="text-teal-300">Click Download!!</div>
                 <ul>
                     {summaries.map((summary) => (
-                        <li className="text-white bg-gray-500" key={summary.summary_id}>{summary.summary_text}</li>
+                        <li className="text-white bg-blue-1000 font-bold text-lg mt-5 " key={summary.summary_id}> -> {summary.summary_text}</li>
                     ))}
                 </ul>
             </div>

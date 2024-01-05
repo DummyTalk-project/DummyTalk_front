@@ -100,17 +100,17 @@ const CellComponent = () => {
                     onKeyDown={enter_event}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="검색어를 입력하세요."
-                    className="border-2 border-gray-300 rounded-md p-2 mb-10 mx-5 w-[90%] bg-right-8 bg-center bg-no-repeat bg-contain"
+                    className="text-amber-50 border-2 border-[#8F969F] rounded-md p-2 mb-10 mx-5 w-[90%] bg-[#1C2835] bg-opacity-[10] bg-right-8 bg-center bg-no-repeat bg-contain"
                     ref={topRef}
                 />
                 <Button
-                    className="border-none absolute right-[5%] bottom-[10%] top-[5%]"
+                    className="text-[#8F969F] border-none absolute right-[5%] bottom-[10%] top-[5%]"
                     onClick={imageSearchRequest}
                 >
                     <Search/>
                 </ Button>
             </div>
-            <div className="grid grid-cols-3 gap-5">
+            <div className="grid grid-cols-3 gap-5 pt-6 px-2">
                 {data && data.map((img, index) => (
                     <div key={index} className="relative aspect-w-3 aspect-h-4"
                          onClick={(e) => handleDownload(!img.imagePath ? img : null)}>

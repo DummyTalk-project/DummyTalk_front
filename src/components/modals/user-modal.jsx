@@ -82,6 +82,7 @@ function UserModal() {
                 formData.append("file", fileInputRef.current.files[0]);
             }
             dispatch(callPostChageUser(formData))
+
         } else if (equals == false && !password == '' || !pwValid && password.length >0 || !chValid && check.length >0){
             alert("비밀번호를 확인해주시길 바랍니다.")
         }

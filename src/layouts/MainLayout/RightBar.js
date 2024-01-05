@@ -16,7 +16,7 @@ const RightBar = ({isOpen}) => {
     const { socket } = useSocket()
 
     const components = {
-        image: <CellComponent />,
+        image: <CellCo mponent />,
         text: <TextSearchComponent />,
         summary: <SummaryComponent />
     }
@@ -81,7 +81,7 @@ const RightBar = ({isOpen}) => {
                 className="h-[60px] min-h-[60px] w-full font-bold text-md flex pl-5 items-center border-b-[1px] border-black justify-between text-zinc-400 bg-[your-color]">
                 <div>보관함</div>
             </div>
-            <div className="flex mt-2">
+            <div className="flex justify-center items-center mt-2 ">
                 <input
                     onClick={() => setChose("image")} type="radio" id={"image"} value="이미지" name="searchOption" defaultChecked={true}
                     className="mr-2"
@@ -103,7 +103,7 @@ const RightBar = ({isOpen}) => {
                     요약
                 </label>
             </div>
-            <div className="border-2 border-amber-200 w-full flex-grow mt-5 overflow-y-auto scrollbar-hidden relative">
+            <div className="w-full flex-grow mt-5 overflow-y-auto scrollbar-hidden relative">
                 {components[chose]}
             </div>
             <div ref={bottomRef}></div>

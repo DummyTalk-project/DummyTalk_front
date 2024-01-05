@@ -76,7 +76,7 @@ const ChatInput = ({ userInfo }) => {
                 { headers: { 'Content-Type': 'application/json' } }
             );
             console.log("summary 요청 성공:", response.data);
-            setSummary(currentSummaryState => !currentSummaryState); // Toggle the summary state after successful response
+            setSummary(currentSummaryState => !currentSummaryState);
         } catch (error) {
             console.error("summary 요청 실패:", error.response || error.message, ">>>>>>", userLanguage);
         } finally {
@@ -84,11 +84,12 @@ const ChatInput = ({ userInfo }) => {
         }
     };
 
-
     useEffect(() => {
-        if (!summary || isSummaryLoading) return;
-        summaryData();
-    }, [summary, isSummaryLoading]);
+        if (summary) {
+            summaryData();
+        }
+    }, [summary]);
+
 
     const enter_event = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
@@ -167,7 +168,7 @@ const ChatInput = ({ userInfo }) => {
             </div>
             {/* 메시지 입력란 */}
             <Textarea
-                className="w-full h-full resize-y top-3 outline outline-zinc-300 bg-[#f2f3f5] bg-opacity-10 text-[#DBDEE1] font-semibold"
+                className="border-[1px] w-full h-full resize-y top-3 outline-none outline-[#3F3F4680] bg-[#f2f3f5] bg-opacity-10 text-[#DBDEE1] font-semibold"
                 maxLength="150"
                 onKeyDown={enter_event}
                 ref={sendMessageRef}

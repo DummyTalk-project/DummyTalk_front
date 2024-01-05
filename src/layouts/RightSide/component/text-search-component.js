@@ -45,21 +45,27 @@ const TextSearchComponent = () => {
                     onKeyDown={enter_event}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="검색어를 입력하세요."
-                    className="border-2 border-gray-300 rounded-md p-2 mb-10 mx-5 w-[90%] bg-right-8 bg-center bg-no-repeat bg-contain"
+                    className="text-amber-50 border-2 border-[#8F969F] rounded-md p-2 mb-10 mx-5 w-[90%] bg-[#1C2835] bg-opacity-[10] bg-right-8 bg-center bg-no-repeat bg-contain"
                     ref={topRef}
                 />
                 <Button
-                    className="border-none absolute right-[5%] bottom-[10%] top-[5%]"
+                    className="text-[#8F969F] border-none absolute right-[5%] bottom-[10%] top-[5%]"
                     onClick={textSearchRequest}
                 >
                     <Search/>
                 </ Button>
             </div>
-            <div className="text-amber-400 border-amber-200 border-2  flex flex-col items-end w-full ">
-                { updateData && updateData.map((chat) => (
-                    <div className="text-amber-400 border-amber-200 border-2  flex flex-col items-end w-full ">
-                        <div className="border-amber-200 text-amber-50 w-full">
-                            {chat.message}
+            <div className="pt-6 text-amber-400 px-4 py-3 flex flex-col items-end w-full ">
+                {updateData && updateData.map((chat) => (
+                    <div className="mb-1 rounded-[3px] bg-[#b5bac1] bg-opacity-10 ounded-[3px] flex flex-col w-full  px-4 py-2 bg-black/5 mt-1 transition hover:bg-gray-200 hover:bg-opacity-10">
+                        <div className="flex items-end gap-x-2 text-sm text-[#B5BAC1] w-full">
+                            <div className={"flex items-center"}>
+                                <span className="font-semibold mr-2 ">{chat.nickname}</span>
+                            </div>
+                            <span className="text-xs">{chat.createdAt}</span>
+                        </div>
+                        <div className="text-[#DBDEE1] py-1 text-sm font-semibold border-amber-200 w-full">
+                            <span>{chat.message}</span>
                         </div>
                     </div>
                 ))}

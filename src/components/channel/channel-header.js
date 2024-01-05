@@ -51,14 +51,14 @@ const ChannelHeader = ({ server }) => {
 
             <DropdownMenuContent className="w-56 text-xs font-medium text-neutral-400 space-y-[2px] bg-[#112033]">
                 <DropdownMenuItem
-                    onClick={() => onOpen("invite")}
+                    onClick={() => onOpen("invitedUser")}
                     className="text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer"
                 >
                     유저 초대
                     <UserPlus className="h-4 w-4 ml-auto" />
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                    onClick={() => onOpen("editServer")}
+                    onClick={() => onOpen("settings")}
                     className="px-3 py-2 text-sm cursor-pointer"
                 >
                     서버 설정

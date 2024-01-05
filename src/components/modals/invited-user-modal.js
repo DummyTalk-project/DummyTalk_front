@@ -1,8 +1,17 @@
 import axios from "axios";
 import {useMemo, useState} from 'react';
 import {useModal} from "src/components/hooks/use-modal";
-import {Ban} from "lucide-react";
+import {Ban, ChevronDown, LogOut, PlusCircle, Settings, TrashIcon, UserPlus, Users} from "lucide-react";
 import { decodeJwt } from "src/lib/tokenUtils";
+import { useUrlQuery } from 'src/components/hooks/use-url-query';
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "src/components/ui/dropdown-menu";
 
 
 
@@ -13,7 +22,9 @@ function InvitedUserModal() {
     const [resignUserEmail, setResignUserEmail] = useState('');
     const {isOpen, onClose, type, data} = useModal();
     const { serverId } = data
-    const userId = userInfo.sub;
+    const userId = userInfo.sub;    const query = useUrlQuery();
+    const serverIds = query.get("server");
+
 
 
     const isModalOpen = isOpen && type === "invitedUser";
@@ -23,9 +34,10 @@ function InvitedUserModal() {
             try {
                 const response = await axios.post(`${process.env.REACT_APP_API_URL}/server/invitedUser`, {
                     userEmail: userEmail,
-                    serverId: serverId
+                    serverId: serverIds
                 });
                 console.log('초대 성공:', response.data);
+                console.log('초대 성공:', serverId);
                 // 초대 성공 후 처리 로직
                 onClose();
             } catch (error) {
@@ -38,7 +50,7 @@ function InvitedUserModal() {
     const handleKickUser = async () => {
         if (resignUserEmail) {
             try {
-                const response = await axios.post(`${process.env.REACT_APP_API_URL}/server/resignUser/${serverId}`, {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/server/resignUser/${serverIds}`, {
                     userEmail: resignUserEmail,
                     userId:userId
                 });
@@ -61,8 +73,8 @@ function InvitedUserModal() {
     return (
         <div className="modal" style={{...modalStyle}}>
             <div className="modal-content">
-                <div className={"flex flex-col"}>
-                    <button className={"text-teal-300 ml-auto"} onClick={onClose}><Ban /></button>
+                <div>
+                    <button onClick={onClose}><Ban /></button>
 
                     <input type="text" value={userEmail} onChange={(e) => setUserEmail(e.target.value)}
                            placeholder="user Email"/>
