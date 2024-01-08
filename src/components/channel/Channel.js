@@ -12,13 +12,12 @@ export const ChannelType = {
     TEXT: "TEXT",
 };
 
-const Channels = ({server}) => {
+const Channels = ({ server }) => {
     const [connectedUsers, setConnectedUsers] = useState([]);
     const query = useUrlQuery();
     const { state } = useLocation();
     const channelId = query.get("channel");
 
-    
     const navigate = useNavigate();
 
     /* 채널 리스트 함수 */
@@ -72,15 +71,14 @@ const Channels = ({server}) => {
             {/* 채널 리스트 렌더링 */}
             {/* <div className="h-[80px] font-bold text-xl border-b-[1px] border-black text-teal-300 flex items-center p-4">
             </div> */}
-            <div className="flex flex-col text-zinc-300 font-thin overflow-y-scroll scrollbar-hidden">
-                <ScrollArea className="flex-1 px-3 pt-1">
+            <div className="flex flex-col overflow-y-scroll font-thin text-zinc-300 scrollbar-hidden">
+                <ScrollArea className="flex-1 pt-1 pl-3">
                     {!!textChannels?.length && (
                         <div className="mb-2">
                             <ChannelSection
                                 channelType={ChannelType.TEXT}
                                 label="텍스트 채널"
                             />
-                            <div className="space-y-[2px]"></div>
                             {textChannels.map((channel) => (
                                 <ChannelItem
                                     key={channel.channelId}
@@ -97,7 +95,6 @@ const Channels = ({server}) => {
                                 channelType={ChannelType.TEXT}
                                 label="음성 채널"
                             />
-                            <div className="space-y-[2px]"></div>
                             {audioChannels.map((channel) => (
                                 <ChannelItem
                                     key={channel.channelId}
@@ -108,7 +105,6 @@ const Channels = ({server}) => {
                             ))}
                         </div>
                     )}
-                    
                 </ScrollArea>
             </div>
         </>

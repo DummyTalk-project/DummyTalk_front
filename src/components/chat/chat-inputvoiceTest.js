@@ -7,6 +7,7 @@ import { Label } from "../ui/label";
 
 const ChatVoiceInputTest = () => {
     const [otherUserStream, setOtherUserStream] = useState(null);
+    console.log("ChatVoiceInputTest Rerender");
     const [peerConnect, setPeerConnect] = useState(null);
     const [enabled, setEnabled] = useState(false);
     const { socket, isConnected } = useSocket();
@@ -90,8 +91,8 @@ const ChatVoiceInputTest = () => {
 
     const handleNegotiationNeededEvent = async (sessionId) => {
         const offer = await peerRef.current.createOffer();
-        console.log("peerRef", peerRef)
-        console.log("offer", offer)
+        console.log("peerRef", peerRef);
+        console.log("offer", offer);
         peerRef.current.setLocalDescription(offer);
         const payload = {
             type: "offer",
@@ -162,9 +163,39 @@ const ChatVoiceInputTest = () => {
     };
 
     const handleTrackEvent = (e) => {
-        console.log(e.streams[0]);
-        partnerAudio.current.srcObject = e.streams[0];
-        setOtherUserStream(e.streams[0]);
+        // Web Audio API 초기화
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(e.streams[0]);
+        const compressor = audioContext.createDynamicsCompressor();
+        // const biquadFilter = audioContext.createBiquadFilter();
+        // const gainNode = audioContext.createGain();
+
+        // 노이즈 감소 설정
+        // biquadFilter.type = "lowshelf";
+        // biquadFilter.frequency.setValueAtTime(1000, audioContext.currentTime);
+        // biquadFilter.gain.setValueAtTime(25, audioContext.currentTime);
+
+        compressor.threshold.setValueAtTime(-50, audioContext.currentTime);
+        compressor.knee.setValueAtTime(40, audioContext.currentTime);
+        compressor.ratio.setValueAtTime(12, audioContext.currentTime);
+        compressor.attack.setValueAtTime(0, audioContext.currentTime);
+        compressor.release.setValueAtTime(0.25, audioContext.currentTime);
+
+        // gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+        // 오디오 노드 연결
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(compressor);
+        // biquadFilter.connect(compressor);
+        compressor.connect(destination);
+
+        // const destination = audioContext.createMediaStreamDestination();
+        // source.connect(compressor);
+        // biquadFilter.connect(compressor);
+        // compressor.connect(gainNode);
+        // gainNode.connect(destination);
+        // console.log("필터적용");
+        partnerAudio.current.srcObject = destination.stream;
+        setOtherUserStream(destination.stream);
     };
 
     const handleSocketMessage = (msg) => {
@@ -197,10 +228,24 @@ const ChatVoiceInputTest = () => {
             handleNewIceCandidate(message.data.candidate);
         }
     };
-    
+
     useEffect(() => {
         if (!isConnected) return;
-        requestMediaStream();
+
+        // 채널 변경 감지 및 처리
+        const handleChannelChange = () => {
+            // 기존 연결 종료
+            if (peerRef.current) {
+                peerRef.current.close();
+                peerRef.current = null;
+            }
+
+            // 새로운 연결 시작
+            requestMediaStream();
+            callUser(channelId); // 새로운 채널 ID를 사용하여 연결 설정
+        };
+
+        handleChannelChange(); // 채널 변경 처리 실행
 
         // 장치 변경 감지
         navigator.mediaDevices.ondevicechange = () => {
@@ -217,7 +262,7 @@ const ChatVoiceInputTest = () => {
             subscription.unsubscribe();
 
             if (peerRef.current) {
-                peerRef.current.close()
+                peerRef.current.close();
                 peerRef.current = null;
             }
 
@@ -226,12 +271,12 @@ const ChatVoiceInputTest = () => {
     }, [channelId, socket]);
 
     return (
-        <div className="flex flex-col h-1/4 relative overflow-hidden px-5 py-2 rounded-lg">
+        <div className="relative flex flex-col px-5 py-2 overflow-hidden rounded-lg h-1/4">
             {/* 채팅 번역 스위치 */}
             <div className="flex flex-row-reverse pb-2">
                 <Label
                     htmlFor="airplane-mode"
-                    className="font-bold text-2 self-center "
+                    className="self-center font-bold text-2 "
                 >
                     음성번역
                 </Label>
@@ -276,7 +321,7 @@ const ChatVoiceInputTest = () => {
                 </Button> */}
                 {/* 메시지 전송 버튼 */}
                 {/* <Button
-                    className="h-8 bg-sky-600 text-white"
+                    className="h-8 text-white bg-sky-600"
                     onClick={sendChatMessage}
                 >
                     Send

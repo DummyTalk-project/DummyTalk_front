@@ -1,112 +1,46 @@
 // src/layouts/LeftSide/Settings.js
-import axios from "axios";
-import { useState } from "react";
 
+import { Headphones, Mic, MicOff, Settings } from "lucide-react";
+import { useSelector } from "react-redux";
+import { Button } from "src/components/ui/button";
+import { ReactComponent as HeadphonesOff } from "./headphones-off.svg";
 import "../../components/modals/VideoModal.css";
 import { useModal } from "../hooks/use-modal"; // Update the path
-import { useUrlQuery } from "../hooks/use-url-query"; // Update the path
+import { UserAvatar } from "../user-avatar";
 import "./css/Settings.css";
 
 function UserSetting() {
-  const { onOpen, onClose } = useModal();
-  const query = useUrlQuery();
-  const serverId = query.get("server");
-  const [serverSettings, setServerSettings] = useState({});
-  const [isVideoOn, setIsVideoOn] = useState(true);
-  const [isScreenSharingOn, setIsScreenSharingOn] = useState(false);
-  const [isAudioMuted, setIsAudioMuted] = useState(false);
-  const [isMicrophoneMuted, setIsMicrophoneMuted] = useState(false);
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false); // New state for VideoModal
+    const { onOpen } = useModal();
+    const { nickname } = useSelector((state) => state.userReducer);
 
-
-
-  const handleVideoToggle = () => {
-    setIsVideoOn(!isVideoOn);
-  };
-
-  const handleScreenShare = () => {
-    setIsScreenSharingOn(!isScreenSharingOn);
-  };
-
-  const handleMuteAudio = () => {
-    setIsAudioMuted(!isAudioMuted);
-  };
-
-  const handleMuteMicrophone = () => {
-    setIsMicrophoneMuted(!isMicrophoneMuted);
-  };
-
-  const updateServerSettings = async (settings) => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/server/setting`,
-        settings
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.log("서버 업데이트 오류", error);
-    }
-  };
-
-  const handleOpenVideoModal = () => {
-    setIsVideoModalOpen(true);
-  };
-
-  const handleCloseVideoModal = () => {
-    setIsVideoModalOpen(false);
-  };
-
-  return (
-    <div className="mt-auto ml-auto">
-      <br />
-      <div>
-        {/* <button
-          className={`icon-btn ${isVideoOn ? "active" : ""} w-1/4`}
-          onClick={handleVideoToggle}
-        >
-          <FontAwesomeIcon icon={faVideo} />
-          <p>Video</p>
-        </button>
-        <button
-          className={`icon-btn ${isScreenSharingOn ? "active" : ""} w-1/4`}
-          onClick={handleScreenShare}
-        >
-          <FontAwesomeIcon icon={faDesktop} />
-          <p>Screen Share</p>
-        </button>
-        <button
-          className={`icon-btn ${isAudioMuted ? "active" : ""} w-1/4`}
-          onClick={handleMuteAudio}
-        >
-          <FontAwesomeIcon icon={faVolumeMute} />
-          <p>Mute Audio</p>
-        </button>
-        <button
-          className={`icon-btn ${isMicrophoneMuted ? "active" : ""} w-1/4`}
-          onClick={handleMuteMicrophone}
-        >
-          <FontAwesomeIcon icon={faMicrophone} />
-          <p>Mute Microphone</p>
-        </button> */}
-      </div>
-      {/* <AudioRecorder /> */}
-      {/* <button
-        className={`icon-btn ${isVideoOn ? "active" : ""}`}
-        onClick={handleOpenVideoModal}
-      >
-        <FontAwesomeIcon icon={faVideo} />
-        <p>Video</p>
-      </button> */}
-      {/* {isVideoModalOpen && (
-        <VideoModal onClose={handleCloseVideoModal} />
-      )} */}
-      <button
-          className="open-settings-btn"
-          onClick={() => onOpen("settings", { serverId })}
-      >
-      </button>
-    </div>
-  );
+    return (
+        <div className="mt-auto h-[60px] w-full bg-[#141b24] flex items-center pl-2 gap-2">
+            <div className="transition cursor-pointer hover:drop-shadow-md">
+                <UserAvatar src="img/1.jpeg" />
+            </div>
+            <div className="flex flex-col w-full">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                        <p className="text-sm font-semibold cursor-pointer text-zinc-400 hover:underline">
+                            {nickname}
+                        </p>
+                    </div>
+                    <Mic className="text-teal-400 hover:text-teal-300" />
+                    <MicOff className=" text-rose-500 hover:text-rose-400" />
+                    <Headphones className="text-teal-400 hover:text-teal-300 " />
+                    <HeadphonesOff className="w-6 h-6 text-rose-500 hover:text-rose-400" />
+                    <Button
+                        className="text-teal-400 hover:text-teal-300"
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onOpen("members")}
+                    >
+                        <Settings />
+                    </Button>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default UserSetting;

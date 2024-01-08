@@ -32,11 +32,11 @@ function ServerSideBar() {
     if (!serverId || !data) return null;
 
     return (
-        <section className="w-60 min-w-[240px] h-full bg-[#112033] flex flex-col">
+        <section className="w-60 min-w-[240px] h-full bg-[#112233] flex flex-col">
             <ChannelHeader server={data} />
             <Channels server={data} />
             <Separator className="my-4 bg-black" />
-            <Friends className=" overflow-y-scroll" />
+            <Friends />
             <Separator className="my-4 bg-black" />
             <UserSetting />
         </section>

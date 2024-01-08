@@ -71,7 +71,7 @@ const ChatInput = ({ userInfo }) => {
         setIsSummaryLoading(true);
         try {
             const response = await axios.post(
-                `http://localhost:8000/${channelId}/summary`,
+                `http://localhost:8000/api/summary/${channelId}/summary`,
                 { nation_language: userLanguage },
                 { headers: { 'Content-Type': 'application/json' } }
             );
@@ -169,7 +169,7 @@ const ChatInput = ({ userInfo }) => {
             {/* 메시지 입력란 */}
             <Textarea
                 className="border-[1px] w-full h-full resize-y top-3 outline-none outline-[#3F3F4680] bg-[#f2f3f5] bg-opacity-10 text-[#DBDEE1] font-semibold"
-                maxLength="150"
+                maxLength="300"
                 onKeyDown={enter_event}
                 ref={sendMessageRef}
                 placeholder="메시지를 입력하세요."

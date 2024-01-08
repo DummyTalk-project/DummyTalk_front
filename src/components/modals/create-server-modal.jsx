@@ -68,9 +68,9 @@ function CreateServerModal() {
                 open={isModalOpen}
                 onOpenChange={onClose}
             >
-                <DialogContent className="bg-white text-black overflow-hidden">
+                <DialogContent className="bg-[#0A192E] text-white overflow-hidden">
                     <DialogHeader className="px-6">
-                        <DialogTitle className="text-2xl text-center font-bold">
+                        <DialogTitle className="text-2xl text-white text-center font-bold">
                             서버 생성하기
                         </DialogTitle>
                         <DialogDescription className="text-center text-zinc-500 ">
@@ -83,7 +83,7 @@ function CreateServerModal() {
                             htmlFor="file"
                             className="flex justify-center"
                         >
-                            <img src="./image 29.png"></img>
+                            <img src="./image_29.png"></img>
                         </label>
                         <input
                             hidden
@@ -92,32 +92,30 @@ function CreateServerModal() {
                             ref={fileInputRef}
                         />
 
-                        <div className="font-semibold text-left p-2">
+                        <div className="font-semibold text-white text-left p-2">
                             서버 이름
                         </div>
                         <input
-                            style={{
-                                backgroundColor: "rgb(233,233,233)",
-                                height: "30px",
-                            }}
-                            className="border-none bg-gray-200 rounded-lg p-2 w-full"
+                            className="bg-[#1C2835] border-2 border-zinc-400 rounded-lg p-2 w-full"
                             type="text"
+                            placeholder={"서버이름을 입력하세요."}
                             value={serverName}
                             onChange={(e) => setServerName(e.target.value)}
                         />
                     </div>
-                    <DialogFooter className="pr-6">
-                        <Button
-                            onClick={onClose}
-                            className="bg-[#FFED46] font-bold"
-                        >
-                            뒤로가기
-                        </Button>
+                    <DialogFooter className="gap-5 sm:justify-center">
+
                         <Button
                             onClick={handleCreateServer}
-                            className="bg-lime-300 hover:bg-lime-400 font-bold mr-4"
+                            className="border-none bg-[#204771] text-white hover:bg-teal-500 font-bold"
                         >
                             생성
+                        </Button>
+                        <Button
+                            onClick={onClose}
+                            className="bg-white text-[#204771] border-none font-bold"
+                        >
+                            취소
                         </Button>
                     </DialogFooter>
                 </DialogContent>

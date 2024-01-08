@@ -54,23 +54,18 @@ const ChannelHeader = ({ server }) => {
                     onClick={() => onOpen("invitedUser")}
                     className="text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer"
                 >
-                    유저 초대
+                    초대 / 강퇴
                     <UserPlus className="h-4 w-4 ml-auto" />
                 </DropdownMenuItem>
+
                 <DropdownMenuItem
                     onClick={() => onOpen("settings")}
                     className="px-3 py-2 text-sm cursor-pointer"
                 >
-                    서버 설정
+                    서버 수정
                     <Settings className="h-4 w-4 ml-auto" />
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                    onClick={() => onOpen("members")}
-                    className="px-3 py-2 text-sm cursor-pointer"
-                >
-                    유저 관리
-                    <Users className="h-4 w-4 ml-auto" />
-                </DropdownMenuItem>
+
                 {userInfo.sub === ADMIN && (
                 <DropdownMenuItem
                     onClick={() =>

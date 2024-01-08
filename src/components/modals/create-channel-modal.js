@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import uuid from "react-uuid";
 import { useModal } from "src/components/hooks/use-modal";
+import { useServerData } from "../hooks/use-server-data";
 import { Button } from "../ui/button";
 import {
     Dialog,
@@ -13,7 +13,6 @@ import {
     DialogTitle,
 } from "../ui/dialog";
 import "./css/ChannelModal.css";
-import { useServerData } from "../hooks/use-server-data";
 
 const CreateChannelModal = () => {
     const navigate = useNavigate();
@@ -40,8 +39,6 @@ const CreateChannelModal = () => {
             updateChannelListData(response.data)
             setChannelName('')
             onClose();
-
-            navigate(`/main?server=${serverId}`);
         } catch (error) {
             console.log("채널 생성 실패");
         } finally {
@@ -55,7 +52,7 @@ const CreateChannelModal = () => {
                 open={isModalOpen}
                 onOpenChange={onClose}
             >
-                <DialogContent className="bg-white text-black overflow-hidden">
+                <DialogContent className="bg-[#0A192E] text-white overflow-hidden">
                     <DialogHeader className="px-6">
                         <DialogTitle className="text-2xl text-center font-bold">
                             채널 생성
@@ -71,37 +68,44 @@ const CreateChannelModal = () => {
                     >
                         <label
                             htmlFor="channelName"
-                            className="font-semibold text-left p-2"
+                            className="font-semibold text-zinc-400 text-left p-2"
                         >
                             채널 이름
                         </label>
                         <input
                             id="channelName"
                             name="channelName"
-                            className="border-none bg-gray-200 rounded-lg p-2 w-full h-8"
+                            className="bg-[#1C2835] border-2 border-zinc-400 rounded-lg p-2 w-full"
                             type="text"
                             value={channelName}
+                            placeholder={"채널 이름을 입력해주세요."}
                             onChange={handleInputChange}
                         />
-                        <div className="font-semibold text-left p-2">형식</div>
+                        <br />
+
+                        <div className="font-semibold text-zinc-400 text-left p-2">형식</div>
                         <select
                             name="channelType"
-                            className="text-xs border-none h-8 bg-gray-200 rounded-lg p-2 w-full"
+                            className="bg-[#1C2835] border-2 border-zinc-400 rounded-lg p-2 w-full"
                             defaultValue="TEXT"
                         >
                             <option value="TEXT">텍스트</option>
                             <option value="VOICE">1대1 음성</option>
                         </select>
                         <input type="hidden" name="serverId" value={serverId} />
-                        <DialogFooter className="mt-3">
+                        <br />
+
+                        <DialogFooter className="sm:justify-center gap-10">
+
+                            <Button className="bg-[#204771] text-white hover:bg-indigo-500/90">
+                                생성
+                            </Button>
+
                             <Button
                                 onClick={onClose}
-                                className="bg-rose-500 hover:bg-rose-400 text-white font-bold"
+                                className="bg-white text-[#1C2835] hover:bg-teal-700 font-bold"
                             >
                                 취소
-                            </Button>
-                            <Button className="bg-indigo-500 text-white hover:bg-indigo-500/90">
-                                생성
                             </Button>
                         </DialogFooter>
                     </form>

@@ -4,14 +4,14 @@ import {useModal} from "src/components/hooks/use-modal";
 import {Ban, ChevronDown, LogOut, PlusCircle, Settings, TrashIcon, UserPlus, Users} from "lucide-react";
 import { decodeJwt } from "src/lib/tokenUtils";
 import { useUrlQuery } from 'src/components/hooks/use-url-query';
-
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "src/components/ui/dropdown-menu";
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "../ui/dialog";
 
 
 
@@ -71,25 +71,62 @@ function InvitedUserModal() {
     };
 
     return (
-        <div className="modal" style={{...modalStyle}}>
-            <div className="modal-content">
-                <div>
-                    <button onClick={onClose}><Ban /></button>
-
-                    <input type="text" value={userEmail} onChange={(e) => setUserEmail(e.target.value)}
-                           placeholder="user Email"/>
-                    <button onClick={handleInviteUser}>사용자 초대</button>
-                </div>
-
-                <div className={"flex flex-col"}>
-                    <input type="text" value={resignUserEmail} onChange={(e) => setResignUserEmail(e.target.value)}
-                           placeholder="user Email"/>
-                    <button onClick={handleKickUser}>사용자 강퇴</button>
-                </div>
-            </div>
 
 
-        </div>
+
+         <Dialog
+                open={isModalOpen}
+                onOpenChange={onClose}
+            >
+                <DialogContent className="bg-[#0A192E] text-white overflow-hidden">
+
+                    <DialogHeader className="px-6">
+                        <DialogTitle className="text-2xl text-white text-center font-bold">
+                            초대 / 강퇴
+                        </DialogTitle>
+
+                        <DialogDescription className="text-center text-zinc-500 ">
+                            서버에 초대할 유저의 이메일을 입력하세요.
+                        </DialogDescription>
+
+
+                        <input
+                            className="bg-[#1C2835] border-2 border-zinc-400 rounded-lg p-2 w-full"
+                            type="text"
+                            placeholder={"User Email"}
+                            value={userEmail}
+                            onChange={(e) => setUserEmail(e.target.value)}
+                        />
+
+                         <button className="px-4 py-2 bg-[#204771] text-white rounded-lg" onClick={handleInviteUser}>
+                            사용자 초대
+                        </button>
+
+                         <DialogDescription className="text-center text-zinc-500 pt-4 ">
+                            서버에 강퇴할 유저의 이메일을 입력하세요.
+                         </DialogDescription>
+
+                          <input
+                            className="bg-[#1C2835] border-2 border-zinc-400 rounded-lg p-2 w-full"
+                            type="text"
+                            placeholder={"User Email"}
+                            value={resignUserEmail}
+                            onChange={(e) => setResignUserEmail(e.target.value)}
+                        />
+
+                        <button className="px-4 py-2 font-semibold bg-white text-[#1C2835] rounded-lg" onClick={handleKickUser}>
+                             사용자 강퇴
+                        </button>
+                    </DialogHeader>
+
+
+                </DialogContent>
+            </Dialog>
+
+
+
+
+
     );
 }
 

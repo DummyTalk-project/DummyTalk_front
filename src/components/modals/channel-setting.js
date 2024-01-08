@@ -15,7 +15,6 @@ function ChannelSetting() {
     const channelId = query.get("channel");
     const currentChannel = useMemo(() => channels.find(channel => channel.channelId === channelId), [channels, channelId]);
 
-    // Fetch channels and connected users data here using useEffect if necessary
 
     const addChannel = (newChannelName) => {
         if (channels.length <= 10 && !channels.some(channel => channel.name === newChannelName)) {
@@ -33,18 +32,18 @@ function ChannelSetting() {
         ));
     };
 
-    const channelDelete = async () => {
-        if (channelId) {
-            try {
-                const response = await axios.delete(`${process.env.REACT_APP_API_URL}/server/${serverId}/channel/${channelId}/delete`);
-                setChannels(channels.filter(channel => channel.channelId !== channelId));
-            } catch (error) {
-                console.error("Error deleting channel:", error);
-            }
-        } else {
-            console.log("No channel selected for deletion.");
-        }
-    };
+    // const channelDelete = async () => {
+    //     if (channelId) {
+    //         try {
+    //             const response = await axios.delete(`${process.env.REACT_APP_API_URL}/server/${serverId}/channel/${channelId}/delete`);
+    //             setChannels(channels.filter(channel => channel.channelId !== channelId));
+    //         } catch (error) {
+    //             console.error("Error deleting channel:", error);
+    //         }
+    //     } else {
+    //         console.log("No channel selected for deletion.");
+    //     }
+    // };
 
     const modalStyle = {
         display: isModalOpen ? 'block' : 'none',
@@ -58,10 +57,6 @@ function ChannelSetting() {
                         채널 이름: {currentChannel?.channelName}
                         <br />
                         채널 유저 : {connectedUsers.length}
-                    </button>
-                    <br />
-                    <button className="delete-channel-btn border-1" onClick={channelDelete} >
-                        채널삭제
                     </button>
                 </div>
             )}
