@@ -5,6 +5,12 @@ import {Label} from "src/components/ui/label";
 import {decodeJwt} from "src/lib/tokenUtils";
 import {useSocket} from "../hooks/use-socket";
 import {Loader, Loader2} from "lucide-react";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from "src/components/ui/dialog";
 
 const ImageSendModal = () => {
     const [enabled, setEnabled] = useState(false);
@@ -73,6 +79,7 @@ const ImageSendModal = () => {
                     response.data.data.map((chat) => (
                         socket.send(`/app/${channelId}/message`
                             , JSON.stringify({
+                                sender: sub,
                                 chatId: chat.chatId,
                                 channelId: channelId,
                                 nickname: chat.nickname,
@@ -100,34 +107,33 @@ const ImageSendModal = () => {
 
     console.log(isConnected)
     return (
-        <div
-            className={`fixed top-0 left-0 w-full h-full ${
-                isModalOpen ? "block" : "hidden"
-            } bg-[rgba(0,0,0,0.4)] z-10`}
+        <Dialog
+            open={isModalOpen}
+            onOpenChange={onCloseHandler}
         >
-            <div
-                className="rounded-2xl bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-20 py-10 border-1 border-gray-800 w-1/2">
-                <span
-                    className="text-gray-700 float-right text-2xl font-extrabold cursor-pointer"
-                    onClick={onCloseHandler}
+            <DialogContent
+                className="text-zinc-400 rounded-2xl bg-[#0A192E]">
+                <DialogHeader
+                    className="text-zinc-300 float-right text-2xl font-extrabold"
                 >
-                    &times;
-                </span>
-                <h2 className="text-center my-5">파일 선택하기</h2>
+                    <DialogTitle className="text-center my-5">파일 선택하기</DialogTitle>
+                </DialogHeader>
                 <label
                     htmlFor="image_files"
-                    onChange={handleAddImage}
                     className="text-center my-5"
                 >
-                    <input
-                        type="file"
-                        id="image_files"
-                        name="image_files"
-                        ref={fileInput}
-                        className="my-2"
-                        multiple={true}
-                    />
+                    파일 선택
                 </label>
+                <input
+                    type="file"
+                    id="image_files"
+                    name="image_files"
+                    ref={fileInput}
+                    onChange={handleAddImage}
+                    className="my-2"
+                    multiple={true}
+                    hidden={true}
+                />
                 <Label className="">사진 전송 10개 이하</Label>
                 <div className="w-100 h-100 grid grid-cols-4 gap-4 ">
                     {showImages.map((image, id) => (
@@ -140,21 +146,22 @@ const ImageSendModal = () => {
                         />
                     ))}
                 </div>
-                { !enabled ?
+                {!enabled ?
                     <button
                         type="submit"
                         onClick={() => onSubmit(true)}
                         className="w-full h-auto p-1 my-2 bg-green-500 text-white border-none rounded-md cursor-pointer"
                     > 전송 </button>
                     :
-                    <button type="button" className="flex fw-full h-5 bg-indigo-500 hover:" disabled>
+                    <button type="button" className="flex w-full h-5 bg-indigo-500 hover:" disabled>
                         <svg className="animate-spin h-full w-5 mr-3 text-amber-50" viewBox="0 0 24 24">
-                            <Loader2 />
+                            <Loader2/>
                         </svg>
                         <a>Processing...</a>
-                    </button>}
-            </div>
-        </div>
+                    </button>
+                }
+            </DialogContent>
+        </Dialog>
     );
 };
 

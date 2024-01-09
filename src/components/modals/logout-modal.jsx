@@ -25,25 +25,25 @@ function LogOutModal() {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white text-black overflow-hidden flex flex-col items-center">
+      <DialogContent className="bg-[#0A192E] text-white overflow-hidden w-[18%] h-[20%]">
         <DialogHeader className="px-6 flex flex-col">
           <DialogTitle className="text-2xl text-center font-bold">
             로그아웃
           </DialogTitle>
-          <DialogDescription className="text-center text-zinc-500 flex flex-col items-center justify-center">
+          <DialogDescription className="text-center text-zinc-500">
             정말로 로그아웃하시겠어요?
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="gap-10 sm:justify-center">
           <Button
-            className="hover:bg-amber-500 bg-amber-400 font-semibold text-sm text-black w-[80px]"
             onClick={onClose}
+            className="border-none bg-[#204771] text-white hover:bg-teal-500 font-bold"
           >
             취소
           </Button>
           <Button
-            className="bg-red-400 hover:bg-red-500 font-semibold text-sm text-black w-[80px]"
             onClick={onClickLogout}
+            className="bg-white text-[#204771] border-none font-bold"
           >
             로그아웃
           </Button>

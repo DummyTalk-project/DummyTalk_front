@@ -9,7 +9,8 @@ import {
     Settings,
     TrashIcon,
     UserPlus,
-    Users
+    Users,
+    BellDot
 } from "lucide-react";
 import {useEffect, useMemo, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -153,7 +154,10 @@ const LeftSideBar = () => {
                     >
                         <Button
                             size={"icon"} className="border-none">
-                            <Bell/>
+                            { FriendData.length ?
+                                <BellDot /> :
+                                <Bell/>
+                            }
                         </Button>
                     </DropdownMenuTrigger>
 

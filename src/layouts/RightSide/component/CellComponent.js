@@ -93,7 +93,7 @@ const CellComponent = () => {
 
     return (
         <>
-            <div className="relative h-10 w-full">
+            <div className="relative h-10 w-full mb-4">
                 <input
                     type="text"
                     value={searchQuery}
@@ -110,11 +110,13 @@ const CellComponent = () => {
                     <Search/>
                 </ Button>
             </div>
-            <div className="grid grid-cols-3 gap-5 pt-6 px-2">
+            {/*<div*/}
+            {/*    className="overflow-y-auto scroll-smooth h-[670px] pt-6 text-amber-400 px-2 py-3 grid grid-cols-3 gap-5 w-full">*/}
+                <div className="grid grid-cols-3 gap-5 pt-6 px-2">
                 {data && data.map((img, index) => (
                     <div key={index} className="relative aspect-w-3 aspect-h-4"
-                         onClick={(e) => handleDownload(!img.imagePath ? img : null)}>
-
+                         onClick={(e) => handleDownload(!img.imagePath ? img : null)}
+                    >
                         <img
                             src={img.imagePath || displayImage(img)}
                             alt={`Image ${index}`}

@@ -24,6 +24,7 @@ const RightBar = () => {
         borderBottom: '4px solid #52CBB6'
     };
 
+
     const TabContent = () => {
         switch (activeTab) {
             case 'image':
@@ -53,11 +54,11 @@ const RightBar = () => {
                     요약
                 </button>
             </div>
-            <div className="w-full flex-grow mt-5 overflow-y-auto scrollbar-hidden relative">
+            <div className="w-full flex-grow mt-5">
                 <TabContent />
             </div>
         </div>
     );
-};
+}
 
 export default RightBar;

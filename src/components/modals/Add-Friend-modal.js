@@ -63,31 +63,33 @@ const AddFriendModal = () => {
             open={isModalOpen}
             onOpenChange={onClose}
         >
-            <DialogContent className="bg-white text-black overflow-hidden">
+            <DialogContent className="bg-[#0A192E] text-white overflow-hidden w-[480px]">
                 <DialogHeader className="px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
                         친구추가
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
-                        이메일을 입력하여 상대방을 친구 목록에 추가할 수
-                        있습니다!
+                        이메일을 입력하여 상대방을 친구 목록에 추가할 수 있습니다!
                     </DialogDescription>
                 </DialogHeader>
                 {/* 정보 수정*/}
-                <input
-                    onChange={handleEmailChange}
-                    className="w-[100%] border-2 h-[30px] font-normal"
-                />
-                <DialogFooter>
+                <div className="gap-1 flex flex-col p-6 mt-[-15px]">
+                    <input
+                        onChange={handleEmailChange}
+                        className="bg-[#1C2835] border-2 border-zinc-400 rounded-lg p-2 w-full"
+                        placeholder={ "이메일을 입력해주세요"}
+                    />
+                </div>
+                <DialogFooter className="gap-10 sm:justify-center mt-[-15px]">
                     <Button
                         onClick={onClickAddFriend}
-                        className="hover:bg-amber-500 bg-amber-400 font-semibold text-sm text-black"
+                        className="border-none bg-[#204771] text-white hover:bg-teal-500 font-bold"
                     >
                         추가
                     </Button>
                     <Button
-                        className="bg-red-400 hover:bg-red-500 font-semibold text-sm text-black"
                         onClick={onClose}
+                        className="bg-white text-[#204771] border-none font-bold"
                     >
                         취소
                     </Button>

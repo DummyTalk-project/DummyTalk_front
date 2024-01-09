@@ -39,17 +39,17 @@ export const Button = ({
 
     return (
         // <Link to='/sign-up' className='btn-mobile'>
-        <button
-            className={`btn ${checkButtonStyle} ${checkButtonSize}`}
-            onClick={onClick}
-            type={type}
+        <Link
+            to={link}
+            className="btn-mobile"
         >
-            <Link
-                to={link}
-                className="btn-mobile"
+            <button
+                className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+                onClick={onClick}
+                type={type}
             >
-                {children}
-            </Link>
-        </button>
+                    {children}
+            </button>
+        </Link>
     );
 };

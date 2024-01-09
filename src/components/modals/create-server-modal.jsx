@@ -104,7 +104,6 @@ function CreateServerModal() {
                         />
                     </div>
                     <DialogFooter className="gap-5 sm:justify-center">
-
                         <Button
                             onClick={handleCreateServer}
                             className="border-none bg-[#204771] text-white hover:bg-teal-500 font-bold"
