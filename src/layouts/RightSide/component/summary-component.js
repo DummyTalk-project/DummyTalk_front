@@ -34,18 +34,18 @@ const SummaryComponent = () => {
 {/*
                 <h2 className="text-white text-center text-lg">요약 목록</h2>
 */}
-                <ul>
-                    {summaries.map((summary) => (
-                        <li className="text-white bg-blue-1000 font-bold text-lg mt-5" key={summary.summary_id}>
-                            -> {summary.summary_text}
-                        </li>
-                    ))}
-                </ul>
+        <ul>
+            {summaries.map((summary) => (
+            <li className="text-white bg-blue-1000 font-bold text-lg mt-5" key={summary.summary_id} style={{ border: "1px solid #f2f3f5" }}>
+             {summary.summary_text}
+            </li>
+        ))}
+        </ul>
             </div>
             {/* 큰 사각형 */}
-            <div style={{ backgroundColor: "#2D4058", width: "100%", height: "600px", marginTop: "20px" }}>
+            {/* <div style={{ backgroundColor: "#2D4058", width: "100%", height: "600px", marginTop: "20px" }}> */}
             </div>
-        </div>
+       
     );
 }
 

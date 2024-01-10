@@ -18,8 +18,8 @@ import {Button} from "src/components/ui/button";
 import {decodeJwt} from "src/lib/tokenUtils";
 import {useModal} from "src/components/hooks/use-modal";
 import {useDispatch, useSelector} from "react-redux";
-import {callGetFriendRequest, callGetNickname, callPostApproval, callPostRefusal} from "src/api/MainAPICalls";
-import {cn} from "src/lib/utils";
+import {callGetFriendRequest, callPostApproval, callPostRefusal} from "src/api/MainAPICalls";
+import { cn } from "src/lib/utils";
 import {FriendRequest} from "src/layouts/LeftSide/FriendRequest";
 import styles from "src/layouts/LeftSide/left-side-bar.module.css"
 import {
