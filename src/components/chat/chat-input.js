@@ -119,7 +119,7 @@ const ChatInput = ({ userInfo }) => {
                 <div className="flex items-center space-x-4">
                     {/* Summary Toggle */}
                     <div className="flex items-center">
-                        <Label htmlFor="summary-mode" className="font-bold text-2">
+                        <Label htmlFor="summary-mode" className="font-bold text-2 text-zinc-300 mr-2">
                             채팅요약
                         </Label>
                         <Switch
@@ -143,7 +143,7 @@ const ChatInput = ({ userInfo }) => {
 
                     {/* 채팅 번역 스위치 */}
                     <div className="flex items-center">
-                        <Label htmlFor="translation-mode" className="font-bold text-2">
+                        <Label htmlFor="translation-mode" className="font-bold text-2 text-zinc-300 mr-2">
                             채팅번역
                         </Label>
                         <Switch

@@ -55,6 +55,7 @@ const AudioRecorderTest = ({ stream }) => {
         negativeSpeechThreshold: 0.35,
         startOnLoad: false,
         stream: stream,
+        minSpeechFrames: 16,
         onVADMisfire: () => {
             console.log("Vad misfire");
         },
