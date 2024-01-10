@@ -105,6 +105,7 @@ const ChatInput = ({ userInfo }) => {
             message: sendMessageRef.current?.value,
             sender: userInfo?.sub,
             nickname: user?.nickname,
+            langague: userInfo?.national_language,
             channelId,
             type: "TEXT",
         }));
@@ -113,7 +114,7 @@ const ChatInput = ({ userInfo }) => {
 
 
     return (
-        <div className="flex flex-col mt-auto relative overflow-hidden px-5 pb-2 rounded-lg">
+        <div className="relative flex flex-col px-5 pb-2 mt-auto overflow-hidden rounded-lg">
             <div className="flex flex-row-reverse pb-2">
                 <div className="flex items-center space-x-4">
                     {/* Summary Toggle */}
@@ -186,7 +187,7 @@ const ChatInput = ({ userInfo }) => {
                 </Button>
                 {/* 메시지 전송 버튼 */}
                 <Button
-                    className="h-8 bg-sky-600 text-white "
+                    className="h-8 text-white bg-sky-600 "
                     onClick={sendChatMessage}
                 >
                     Send

@@ -86,18 +86,19 @@ const ChatItem = ({chat, channel, name}) => {
                 )}
 
                 <div className="group flex gap-x-2 items-start w-full">
-                    <div className="hover:drop-shadow-md transition">{/*cursor-pointer */}
+                    <div className="hover:drop-shadow-md transition mt-2 mx-2">{/*cursor-pointer */}
                         {chat.sender.userImgPath ?
                             <UserAvatar src={ chat.sender.userImgPath }/>
                             :
-                            <User className={"text-teal-300 border-none"}/>
+                            <div >
+                                <User className={"text-teal-300 border-none"}/>
+                            </div>
                         }
-
                     </div>
                     <div className="flex flex-col w-full">
                         <div className="flex items-center gap-x-2">
                             <div className="flex items-center">
-                                <p className="font-semibold texet-sm"> {/* hover:underline cursor-pointer*/}
+                                <p className="font-semibold text-base"> {/* hover:underline cursor-pointer*/}
                                     { chat.sender.nickname || name }
                                 </p>
                                 {/* <ActionTooltip label={member.role}>

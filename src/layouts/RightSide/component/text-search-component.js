@@ -97,7 +97,7 @@ const TextSearchComponent = () => {
                         </div>
                     </div>
                 )) }
-                { !updateData.length && <div>검색 결과가 없습니다.</div> }
+                { !updateData.length && <div className={"w-full text-center"}>검색 결과가 없습니다.</div> }
             </div>
         </>
     )

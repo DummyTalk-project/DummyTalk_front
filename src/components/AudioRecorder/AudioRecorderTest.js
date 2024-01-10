@@ -5,7 +5,6 @@ import * as ort from "onnxruntime-web";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQueueState } from "rooks";
 import { decodeJwt } from "src/lib/tokenUtils";
-import { Button } from "../ui/button";
 import "./AudioRecorder.css";
 
 ort.env.wasm.wasmPaths = {
@@ -17,18 +16,18 @@ ort.env.wasm.wasmPaths = {
 
 const AudioRecorderTest = ({ stream }) => {
     const [list, { enqueue, dequeue }] = useQueueState([]);
-    const [isFirstEnqueue, setIsFirstEnqueue] = useState(false)
+    const [isFirstEnqueue, setIsFirstEnqueue] = useState(false);
+    const isLoading = useRef();
     const translatedAudioRef = useRef();
     const accessToken = localStorage.getItem("accessToken");
     const userInfo = useMemo(() => decodeJwt(accessToken), [accessToken]);
-
     const endedHandler = (e) => {
         if (list.length > 0) {
             const wavBuffer = dequeue();
             sendAudioToServer(wavBuffer);
         }
     };
-    
+
     const sendAudioToServer = (wavBuffer) => {
         const formData = new FormData();
         formData.append("file", new Blob([wavBuffer]), "audio.wav");
@@ -40,11 +39,12 @@ const AudioRecorderTest = ({ stream }) => {
             responseType: "blob",
             data: formData,
         };
-    
+
         axios(axiosConfig).then((response) => {
             const blob = new Blob([response.data]);
-            const url = window.URL.createObjectURL(blob)
+            const url = window.URL.createObjectURL(blob);
             translatedAudioRef.current.src = url;
+            isLoading.current.textContent = "";
         });
     };
 
@@ -63,11 +63,12 @@ const AudioRecorderTest = ({ stream }) => {
         },
         onSpeechEnd: (audio) => {
             console.log("Speech end");
+            isLoading.current.textContent = "번역중";
             const wavBuffer = utils.encodeWAV(audio);
             enqueue(wavBuffer);
 
             if (list.length === 0) {
-                setIsFirstEnqueue(true)
+                setIsFirstEnqueue(true);
             }
             // const base64 = utils.arrayBufferToBase64(wavBuffer);
             // const url = `data:audio/wav;base64,${base64}`;
@@ -79,7 +80,7 @@ const AudioRecorderTest = ({ stream }) => {
         if (list.length > 0 && isFirstEnqueue) {
             const wavBuffer = dequeue();
             sendAudioToServer(wavBuffer);
-            setIsFirstEnqueue(false)
+            setIsFirstEnqueue(false);
         }
     }, [list]); // 큐(list)의 변경을 감지합니다.
 
@@ -92,20 +93,29 @@ const AudioRecorderTest = ({ stream }) => {
                 onEnded={endedHandler}
                 hidden
             />
-            <Button
-                variant="ghost"
-                className={`w-[70px] h-[70px] bg-transparent border-2 border-[#8e44ad] rounded-full hover:scale-105 transition-transform ${
-                    vad?.loading || !!vad?.errored ? "hidden" : "block"
-                }`}
-                onClick={() => vad.toggle()}
-            >
-                {!vad?.listening && (
-                    <Mic className="text-[#8e44ad] w-full h-full font-bold" />
-                )}
-                {vad?.listening && (
-                    <Activity className="text-[#8e44ad] w-full h-full font-bold" />
-                )}
-            </Button>
+            <div className="lk-control-bar">
+                <div
+                    className={`lk-button-group ${
+                        vad?.loading || !!vad?.errored ? "hidden" : "block"
+                    }`}
+                    onClick={() => vad.toggle()}
+                >
+                    {!vad?.listening && (
+                        <button className="lk-button">
+                            <Mic size={16} />
+                        </button>
+                    )}
+                    {vad?.listening && (
+                        <button className="lk-button">
+                            <Activity size={16}/>
+                        </button>
+                    )}
+                </div>
+            </div>
+            <div
+                ref={isLoading}
+                className="font-bold text-indigo-500"
+            ></div>
         </>
     );
 };

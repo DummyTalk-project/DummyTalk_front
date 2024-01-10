@@ -7,8 +7,6 @@ import { Label } from "../ui/label";
 
 const ChatVoiceInputTest = () => {
     const [otherUserStream, setOtherUserStream] = useState(null);
-    console.log("ChatVoiceInputTest Rerender");
-    const [peerConnect, setPeerConnect] = useState(null);
     const [enabled, setEnabled] = useState(false);
     const { socket, isConnected } = useSocket();
     const partnerAudio = useRef();
@@ -61,22 +59,22 @@ const ChatVoiceInputTest = () => {
     const createPeer = (sessionId) => {
         const peer = new RTCPeerConnection({
             iceServers: [
+                // {
+                //     urls: [
+                //         "stun:stun1.l.google.com:19302",
+                //         "stun:stun2.l.google.com:19302",
+                //     ],
+                // },
                 {
-                    urls: [
-                        "stun:stun1.l.google.com:19302",
-                        "stun:stun2.l.google.com:19302",
-                    ],
+                    urls: "turns:freeturn.net:5349",
+                    credential: "free",
+                    username: "free",
                 },
-                // {
-                //     urls: "turns:freeturn.net:5349",
-                //     credential: "free",
-                //     username: "free",
-                // },
-                // {
-                //     urls: "turn:freeturn.net:3478",
-                //     credential: "free",
-                //     username: "free",
-                // },
+                {
+                    urls: "turn:freeturn.net:3478",
+                    credential: "free",
+                    username: "free",
+                },
             ],
         });
 
@@ -85,15 +83,14 @@ const ChatVoiceInputTest = () => {
         peer.onnegotiationneeded = () =>
             handleNegotiationNeededEvent(sessionId);
 
-        setPeerConnect(peer);
         return peer;
     };
 
     const handleNegotiationNeededEvent = async (sessionId) => {
         const offer = await peerRef.current.createOffer();
-        console.log("peerRef", peerRef);
-        console.log("offer", offer);
+
         peerRef.current.setLocalDescription(offer);
+
         const payload = {
             type: "offer",
             dest: sessionId,
@@ -103,7 +100,7 @@ const ChatVoiceInputTest = () => {
                 sdp: offer,
             },
         };
-        console.log("payload", payload);
+
         sendMessage(payload);
     };
 
@@ -162,31 +159,44 @@ const ChatVoiceInputTest = () => {
         peerRef.current.addIceCandidate(candidate).catch((e) => console.log(e));
     };
 
+    const handlePeerDisconnected = () => {
+
+        console.log('user leave');
+        
+        if (peerRef.current) {
+            peerRef.current.close();
+            peerRef.current = null;
+        }
+
+        setOtherUserStream(null);
+    };
+
     const handleTrackEvent = (e) => {
         // Web Audio API 초기화
-        const audioContext = new AudioContext();
-        const source = audioContext.createMediaStreamSource(e.streams[0]);
-        const compressor = audioContext.createDynamicsCompressor();
+        // const audioContext = new AudioContext();
+        // const source = audioContext.createMediaStreamSource(e.streams[0]);
+        // const compressor = audioContext.createDynamicsCompressor();
         // const biquadFilter = audioContext.createBiquadFilter();
         // const gainNode = audioContext.createGain();
 
-        // 노이즈 감소 설정
+        // // 노이즈 감소 설정
         // biquadFilter.type = "lowshelf";
         // biquadFilter.frequency.setValueAtTime(1000, audioContext.currentTime);
-        // biquadFilter.gain.setValueAtTime(25, audioContext.currentTime);
+        // biquadFilter.gain.setValueAtTime(25, audioContext.currentTime); // 값을 낮춰보세요
 
-        compressor.threshold.setValueAtTime(-50, audioContext.currentTime);
-        compressor.knee.setValueAtTime(40, audioContext.currentTime);
-        compressor.ratio.setValueAtTime(12, audioContext.currentTime);
-        compressor.attack.setValueAtTime(0, audioContext.currentTime);
-        compressor.release.setValueAtTime(0.25, audioContext.currentTime);
+        // compressor.threshold.setValueAtTime(-40, audioContext.currentTime); // 값을 조정해보세요
+        // compressor.ratio.setValueAtTime(8, audioContext.currentTime); // 값을 낮춰보세요
+        // compressor.knee.setValueAtTime(40, audioContext.currentTime);
+        // compressor.attack.setValueAtTime(0, audioContext.currentTime);
+        // compressor.release.setValueAtTime(0.25, audioContext.currentTime);
 
-        // gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-        // 오디오 노드 연결
-        const destination = audioContext.createMediaStreamDestination();
-        source.connect(compressor);
+        // gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        // // 오디오 노드 연결
+        // const destination = audioContext.createMediaStreamDestination();
+        // source.connect(biquadFilter);
         // biquadFilter.connect(compressor);
-        compressor.connect(destination);
+        // compressor.connect(destination);
+        // gainNode.connect(destination);
 
         // const destination = audioContext.createMediaStreamDestination();
         // source.connect(compressor);
@@ -194,8 +204,9 @@ const ChatVoiceInputTest = () => {
         // compressor.connect(gainNode);
         // gainNode.connect(destination);
         // console.log("필터적용");
-        partnerAudio.current.srcObject = destination.stream;
-        setOtherUserStream(destination.stream);
+        partnerAudio.current.srcObject = e.streams[0];
+        console.log(e.streams[0]);
+        setOtherUserStream(e.streams[0]);
     };
 
     const handleSocketMessage = (msg) => {
@@ -204,9 +215,11 @@ const ChatVoiceInputTest = () => {
         if (!message.dest || socket.id === message.dest) return;
 
         if (message.type === "other-user") {
+            console.log('other-user');
             callUser(message.dest);
             otherUser.current = message.dest;
         } else if (message.type === "user-joined") {
+            console.log('user-joined');
             otherUser.current = message.dest;
 
             const welcomePayload = {
@@ -221,31 +234,23 @@ const ChatVoiceInputTest = () => {
 
             sendMessage(welcomePayload);
         } else if (message.type === "offer") {
+            console.log('offer');
             handleReceiveCall(message);
         } else if (message.type === "answer") {
+            console.log('answer');
             handleAnswer(message);
         } else if (message.type === "ice-candidate") {
+            console.log('ice-candidate');
             handleNewIceCandidate(message.data.candidate);
+        } else if (message.type === "leave") {
+            console.log('leave');
+            handlePeerDisconnected();
         }
     };
 
     useEffect(() => {
-        if (!isConnected) return;
-
-        // 채널 변경 감지 및 처리
-        const handleChannelChange = () => {
-            // 기존 연결 종료
-            if (peerRef.current) {
-                peerRef.current.close();
-                peerRef.current = null;
-            }
-
-            // 새로운 연결 시작
-            requestMediaStream();
-            callUser(channelId); // 새로운 채널 ID를 사용하여 연결 설정
-        };
-
-        handleChannelChange(); // 채널 변경 처리 실행
+        if (!isConnected || peerRef.current) return;
+        requestMediaStream();
 
         // 장치 변경 감지
         navigator.mediaDevices.ondevicechange = () => {
@@ -259,16 +264,18 @@ const ChatVoiceInputTest = () => {
         );
 
         return () => {
-            subscription.unsubscribe();
-
             if (peerRef.current) {
                 peerRef.current.close();
                 peerRef.current = null;
             }
 
+            
+            setOtherUserStream(null);
+
+            subscription.unsubscribe();
             navigator.mediaDevices.ondevicechange = null; // 장치 변경 감지 해제
         };
-    }, [channelId, socket]);
+    }, [channelId]);
 
     return (
         <div className="relative flex flex-col px-5 py-2 overflow-hidden rounded-lg h-1/4">

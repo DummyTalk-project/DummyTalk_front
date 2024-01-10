@@ -49,15 +49,16 @@ const ImageSendModal = () => {
     };
 
     const onSubmit = async (enabled) => {
-        try {
-            const formData = new FormData();
-            formData.append("userId", sub);
-            formData.append("nickname", nickname);
-            formData.append("channelId", channelId);
 
-            if (fileInput.current && fileInput.current.files) {
+        try {
+
+            if (fileInput.current && fileInput.current.files.length > 0) {
                 const files = fileInput.current.files;
 
+                const formData = new FormData();
+                formData.append("userId", sub);
+                formData.append("nickname", nickname);
+                formData.append("channelId", channelId);
 
                 for (let i = 0; i < files.length; i++) {
                     formData.append("fileInfo", files[i]);
@@ -146,18 +147,18 @@ const ImageSendModal = () => {
                         />
                     ))}
                 </div>
-                {!enabled ?
+                { !enabled ?
                     <button
                         type="submit"
                         onClick={() => onSubmit(true)}
                         className="w-full h-auto p-1 my-2 bg-green-500 text-white border-none rounded-md cursor-pointer"
                     > 전송 </button>
                     :
-                    <button type="button" className="flex w-full h-5 bg-indigo-500 hover:" disabled>
-                        <svg className="animate-spin h-full w-5 mr-3 text-amber-50" viewBox="0 0 24 24">
+                    <button type="button" className="pl-[180px] rounded-[3px] flex flex-row w-full h-6 bg-indigo-500 hover:" disabled>
+                        <svg className="animate-spin h-full mr-3 text-amber-50" viewBox="0 0 24 24">
                             <Loader2/>
                         </svg>
-                        <a>Processing...</a>
+                        <a className={"text-white"}>전송중...</a>
                     </button>
                 }
             </DialogContent>

@@ -54,7 +54,7 @@ const RightBar = () => {
                     요약
                 </button>
             </div>
-            <div className="w-full flex-grow mt-5">
+            <div className="w-full h-full flex-grow mt-5">
                 <TabContent />
             </div>
         </div>
