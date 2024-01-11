@@ -85,7 +85,7 @@ const SignUpForm = () => {
 
     const onClickSignUp = () =>{
         if(userName && userPhone && userEmail && check && data.data && data.status == 200 && language){
-            navigate("/")
+            window.location.href = '/'
             dispatch(callPostSignUp(user))
         } else{
             alert("입력하신 정보를 확인해주시길 바랍니다.")

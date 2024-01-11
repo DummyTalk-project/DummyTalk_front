@@ -119,8 +119,8 @@ const ChatInput = ({ userInfo }) => {
                 <div className="flex items-center space-x-4">
                     {/* Summary Toggle */}
                     <div className="flex items-center">
-                        <Label htmlFor="summary-mode" className="font-bold text-2">
-                            채팅요약
+                        <Label htmlFor="summary-mode" className="font-bold text-2 text-zinc-300 mr-2">
+                            요약
                         </Label>
                         <Switch
                             id={"summary-mode"}
@@ -143,8 +143,8 @@ const ChatInput = ({ userInfo }) => {
 
                     {/* 채팅 번역 스위치 */}
                     <div className="flex items-center">
-                        <Label htmlFor="translation-mode" className="font-bold text-2">
-                            채팅번역
+                        <Label htmlFor="translation-mode" className="font-bold text-2 text-zinc-300 mr-2">
+                            번역
                         </Label>
                         <Switch
                             id={"translation-mode"}
@@ -169,13 +169,13 @@ const ChatInput = ({ userInfo }) => {
             </div>
             {/* 메시지 입력란 */}
             <Textarea
-                className="border-[1px] w-full h-full resize-y top-3 outline-none outline-[#3F3F4680] bg-[#f2f3f5] bg-opacity-10 text-[#DBDEE1] font-semibold"
+                className="border-[1px] w-full resize-none top-3 outline-none outline-[#3F3F4680] bg-[#f2f3f5] bg-opacity-10 text-[#DBDEE1] font-semibold"
                 maxLength="300"
                 onKeyDown={enter_event}
                 ref={sendMessageRef}
                 placeholder="메시지를 입력하세요."
             />
-            <div className="absolute right-[5%] bottom-[10%] ">
+            <div className="absolute right-[3%] bottom-[10%] ">
                 {/* 사진 전송 버튼 */}
                 <Button
                     className="absolute right-[95%] bottom-[-20%] border-none"
@@ -183,11 +183,11 @@ const ChatInput = ({ userInfo }) => {
                         onOpen("imageSend", { channelId, socket, isConnected })
                     }
                 >
-                    <ImagePlus />
+                    <ImagePlus className={"text-zinc-300"}/>
                 </Button>
                 {/* 메시지 전송 버튼 */}
                 <Button
-                    className="h-8 text-white bg-sky-600 "
+                    className="h-7 text-white bg-teal-500 "
                     onClick={sendChatMessage}
                 >
                     Send

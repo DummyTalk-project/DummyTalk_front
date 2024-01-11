@@ -3,6 +3,7 @@ import "@livekit/components-styles";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { decodeJwt } from "src/lib/tokenUtils";
 import CustomAudioConference from "../AudioRecorder/custom-audio-conference";
 import { useUrlQuery } from "../hooks/use-url-query";
@@ -12,13 +13,14 @@ const LiveKit = () => {
     const [token, setToken] = useState(null);
     const query = useUrlQuery();
     const channelId = query.get("channel");
+    const {nickname} = useSelector(state => state.userReducer)
     const accessToken = localStorage.getItem("accessToken");
     const userInfo = decodeJwt(accessToken);
 
     useEffect(() => {
         (async () => {
             const response = await axios.get(
-                `${process.env.REACT_APP_API_URL}/livekit/getTokens?room=${channelId}&userId=${userInfo?.sub}`
+                `${process.env.REACT_APP_API_URL}/livekit/getTokens?room=${channelId}&userId=${userInfo?.sub}&nickname=${nickname}`
             );
 
             setToken(response.data);

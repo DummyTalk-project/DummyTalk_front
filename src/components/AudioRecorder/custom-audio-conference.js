@@ -24,24 +24,24 @@ const CustomAudioConference = ({ ...props }) => {
     );
 
     useLayoutEffect(() => {
-        if (mediaStream) return;
+        // if (mediaStream) return;
 
+        
         for (const track of tracks) {
-            if (track.publication instanceof RemoteTrackPublication) {
-                track.publication.setSubscribed(true);
-                if (track.publication.audioTrack?.mediaStreamTrack) {
-                    const mediaStreamTrack =
-                        track.publication.audioTrack?.mediaStreamTrack;
-                    const newMediaStream = new MediaStream([mediaStreamTrack]);
-                    setMediaStream(newMediaStream);
-                }
-                // MediaStreamTrack을 AudioContext에 연결
-                // setMediaStream(newMediaStream);
+            if (!(track.publication instanceof RemoteTrackPublication))
+                continue;
+
+            track.publication.setSubscribed(true);
+            if (track.publication.audioTrack?.mediaStreamTrack) {
+                const mediaStreamTrack =
+                    track.publication.audioTrack?.mediaStreamTrack;
+                const newMediaStream = new MediaStream([mediaStreamTrack]);
+                
+                setMediaStream(newMediaStream);
             }
         }
     }, [tracks]);
 
-    console.log(mediaStream);
     // TODO: Layout 수정
     return (
         <LayoutContextProvider>
@@ -67,10 +67,7 @@ const CustomAudioConference = ({ ...props }) => {
                     <div className="grid w-full h-full grid-cols-2 gap-3 p-3">
                         {tracks?.map((trackRef) => (
                             <>
-                                <AudioTrack
-                                    trackRef={trackRef}
-                                    volume={0}
-                                />
+                                <AudioTrack trackRef={trackRef} />
                                 <div className="flex flex-col items-center justify-center w-full h-1/2">
                                     <AudioVisualizer trackRef={trackRef} />
                                     <span>{trackRef.participant.name}</span>

@@ -75,7 +75,7 @@ const CellComponent = () => {
             const response = await axios.get(
                 `http://localhost:8000/api/image/search/${channelId}/${searchQuery}`// FastAPI 엔드포인트로 변경
             );
-            console.log("Response from FastAPI: ", response);
+            console.log("Response from FastAPI:   ", response);
             if (response.status === 200) {
                 setUpdateData(response.data.similar_images); // 데이터 설정
                 setSearchQuery(""); // 검색창 초기화
@@ -111,17 +111,20 @@ const CellComponent = () => {
                 </ Button>
             </div>
             <div
-                className="overflow-y-auto scroll-smooth h-[570px] pt-6 text-amber-400 px-2 py-3 grid grid-cols-3 gap-5 w-full">
+                className="overflow-y-auto scroll-smooth pl-3 h-[670px] pt-6 text-amber-400 py-3 grid grid-cols-3 gap-5 w-full">
                 {data && data.map((img, index) => (
-                    <div key={index} className="aspect-w-3 aspect-h-4"
-                         onClick={(e) => handleDownload(!img.imagePath ? img : null)}
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative aspect-square rounded-md mt-2 overflow-hidden flex items-center bg-secondary h-28 w-28"
+                        onClick={(e) => handleDownload(!img.imagePath ? img : null)}
                     >
                         <img
                             src={img.imagePath || displayImage(img)}
                             alt={`Image ${index}`}
-                            className="w-full h-full object-cover object-center rounded-md"
+                            className="w-full h-full object-cover"
                         />
-                    </div>
+                    </a>
                 ))}
             </div>
         </>
