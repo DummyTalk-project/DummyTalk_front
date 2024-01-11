@@ -30,7 +30,7 @@ const SummaryComponent = () => {
     return (
         <div className="w-full">
             {/* 요약 목록 */}
-            <div id="summary-display">
+            <div id="summary-display">/
 {/*
                 <h2 className="text-white text-center text-lg">요약 목록</h2>
 */}
