@@ -79,7 +79,7 @@ const ChannelItem = ({ channel, serverId, server }) => {
                 <div className="ml-auto flex items-center gap-x-2">
                     <ActionTooltip label="수정">
                         <Edit
-                            onClick={() => onOpen("channelSettingModal")}
+                            onClick={() => onOpen("#swae")}
                             className="hidden group-hover:block w-4 h-4 text-zinc-400 hover:text-zinc-300 transition"
                         />
                     </ActionTooltip>

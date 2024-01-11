@@ -36,7 +36,7 @@ const SummaryComponent = () => {
 */}
         <ul>
             {summaries.map((summary) => (
-            <li className="text-white bg-blue-1000 font-bold text-lg mt-5" key={summary.summary_id} style={{ border: "1px solid #f2f3f5" }}>
+            <li className="bg-blue-1000 text-lg mt-5 ml-4 mr-4 text-zinc-100 " key={summary.summary_id}>
              {summary.summary_text}
             </li>
         ))}
