@@ -32,10 +32,10 @@ function UserSetting() {
                             { nickname }
                         </p>
                     </div>
-                    <Mic className="text-teal-400 hover:text-teal-300" />
-                    <MicOff className=" text-rose-500 hover:text-rose-400" />
-                    <Headphones className="text-teal-400 hover:text-teal-300 " />
-                    <HeadphonesOff className="w-6 h-6 text-rose-500 hover:text-rose-400" />
+                    {/*<Mic className="text-teal-400 hover:text-teal-300" />*/}
+                    {/*<MicOff className=" text-rose-500 hover:text-rose-400" />*/}
+                    {/*<Headphones className="text-teal-400 hover:text-teal-300 " />*/}
+                    {/*<HeadphonesOff className="w-6 h-6 text-rose-500 hover:text-rose-400" />*/}
                     <Button
                         className="text-teal-400 hover:text-teal-300"
                         variant="ghost"

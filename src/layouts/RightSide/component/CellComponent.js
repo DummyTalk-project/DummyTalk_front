@@ -3,7 +3,7 @@ import {useUrlQuery} from "src/components/hooks/use-url-query";
 import axios from "axios";
 import FileDownload from 'react-file-download';
 import {Button} from "src/components/ui/button";
-import {Search} from "lucide-react";
+import {Search,Loader2} from "lucide-react";
 
 
 const CellComponent = () => {
@@ -14,6 +14,7 @@ const CellComponent = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [updateData, setUpdateData] = useState([]);
     const [data, setData] = useState('');
+    const [enabled, setEnabled] = useState(false);
     const topRef = useRef()
     // console.log("updateData", updateData)
 
@@ -72,6 +73,7 @@ const CellComponent = () => {
     const imageSearchRequest = async () => {
         console.log("searchQuery", searchQuery);
         try {
+            setEnabled(true)
             const response = await axios.get(
                 `http://localhost:8000/api/image/search/${channelId}/${searchQuery}`// FastAPI 엔드포인트로 변경
             );
@@ -83,7 +85,9 @@ const CellComponent = () => {
         } catch (error) {
             console.error("Error in fetching data", error);
         }
+        setEnabled(false)
     }
+
     const enter_event = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
@@ -103,20 +107,35 @@ const CellComponent = () => {
                     className="text-amber-50 border-2 border-[#8F969F] rounded-md p-2 mb-10 mx-5 w-[90%] bg-[#1C2835] bg-opacity-[10] bg-right-8 bg-center bg-no-repeat bg-contain"
                     ref={topRef}
                 />
-                <Button
+                {/* <Button
                     className="text-[#8F969F] border-none absolute right-[5%] bottom-[10%] top-[5%]"
                     onClick={imageSearchRequest}
                 >
                     <Search/>
-                </ Button>
+                </ Button> */}
+                {!enabled ?
+                    <Button
+                        className="text-[#8F969F] border-none absolute right-[5%] bottom-[10%] top-[5%]"
+                        onClick={imageSearchRequest}
+                    >
+                        <Search />
+                    </ Button>
+                    :
+                    <button type="button" className="flex border-none absolute right-[5%] bottom-[10%] top-[10%]"
+                            disabled>
+                        <svg className="animate-spin h-full w-5 mr-3 text-amber-50" viewBox="0 0 24 24">
+                            <Loader2 />
+                        </svg>
+                    </button>
+                }
             </div>
             <div
-                className="overflow-y-auto scroll-smooth pl-3 h-[670px] pt-6 text-amber-400 py-3 grid grid-cols-3 gap-5 w-full">
+                className="overflow-y-auto scroll-smooth pl-3 h-[590px] pt-6 text-amber-400 py-3 grid grid-cols-3 gap-5 w-full">
                 {data && data.map((img, index) => (
                     <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="relative aspect-square rounded-md mt-2 overflow-hidden flex items-center bg-secondary h-28 w-28"
+                        className="relative aspect-square rounded-md mt-2 overflow-hidden flex items-center bg-secondary h-24 w-24"
                         onClick={(e) => handleDownload(!img.imagePath ? img : null)}
                     >
                         <img
