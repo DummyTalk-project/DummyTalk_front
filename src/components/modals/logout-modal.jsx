@@ -25,7 +25,7 @@ function LogOutModal() {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#0A192E] text-white overflow-hidden w-[18%] h-[20%]">
+      <DialogContent className="bg-[#0A192E] text-white overflow-hidden">
         <DialogHeader className="px-6 flex flex-col">
           <DialogTitle className="text-2xl text-center font-bold">
             로그아웃
