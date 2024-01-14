@@ -71,7 +71,7 @@ const ChatInput = ({ userInfo }) => {
         setIsSummaryLoading(true);
         try {
             const response = await axios.post(
-                `http://localhost:8000/api/summary/${channelId}/summary`,
+                `${process.env.REACT_APP_FASTAPI_URL}/api/summary/${channelId}/summary`,
                 { nation_language: userLanguage },
                 { headers: { 'Content-Type': 'application/json' } }
             );

@@ -18,7 +18,7 @@ export const SocketProvider = ({ children }) => {
         stomp.connect({}, function (frame) {
             console.log("Connected: " + frame);
             let url = stomp.ws._transport.url;
-            url = url.replace("ws://localhost:9999", "");
+            url = url.replace(`ws://${process.env.REACT_APP_WS_URL}`, "");
             url = url.replaceAll("/websocket", "");
             url = url.replace(/^\/[0-9]+\//, "");
             stomp.id = url;
