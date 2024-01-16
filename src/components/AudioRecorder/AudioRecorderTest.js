@@ -32,7 +32,6 @@ const AudioRecorderTest = ({ stream }) => {
         const formData = new FormData();
         formData.append("file", new Blob([wavBuffer]), "audio.wav");
         const apiUrl = `${process.env.REACT_APP_FASTAPI_URL}/api/v1/audio/audio/${userInfo?.national_language}`;
-        console.log("apiUrl", apiUrl);
         const axiosConfig = {
             url: apiUrl,
             method: "POST",
@@ -57,13 +56,10 @@ const AudioRecorderTest = ({ stream }) => {
         stream: stream,
         minSpeechFrames: 16,
         onVADMisfire: () => {
-            console.log("Vad misfire");
         },
         onSpeechStart: () => {
-            console.log("Speech start");
         },
         onSpeechEnd: (audio) => {
-            console.log("Speech end");
             isLoading.current.textContent = "번역중";
             const wavBuffer = utils.encodeWAV(audio);
             enqueue(wavBuffer);

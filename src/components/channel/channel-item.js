@@ -51,7 +51,6 @@ const ChannelItem = ({ channel, serverId, server }) => {
                 console.error("Error deleting channel:", error);
             }
         } else {
-            console.log("No channel selected for deletion.");
         }
     };
 

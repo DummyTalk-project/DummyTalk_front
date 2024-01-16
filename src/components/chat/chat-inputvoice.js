@@ -47,13 +47,11 @@ const ChatVoiceInput = ({ channelId, userInfo, setData }) => {
             `/topic/audio/${channelId}`,
             async (msg) => {
                 let result = JSON.parse(msg.body);
-                console.log("result   :", result);
 
                 if (
                     result.chat.type === "AUDIO" &&
                     result.chat.sender !== parseInt(userInfo?.sub)
                 ) {
-                    console.log("AUDIO 시작");
                     const apiUrl = `${process.env.REACT_APP_FASTAPI_URL}/api/v1/audio/audio/${userInfo?.national_language}`;
                     const axiosConfig = {
                         url: apiUrl,
@@ -118,7 +116,6 @@ const ChatVoiceInput = ({ channelId, userInfo, setData }) => {
                     id={"airplane-mode"}
                     checked={enabled}
                     onClick={() => {
-                        console.log(!enabled);
                         setEnabled((prev) => !prev);
                     }}
                     className={`${

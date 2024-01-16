@@ -34,8 +34,6 @@ function Header() {
           `${process.env.REACT_APP_API_URL}/server/list/${userId}`
         );
         setServerList(Array.isArray(response.data) ? response.data : []);
-        console.log("요청 성공", response);
-        console.log("요청 성공", setServerList);
       } catch (error) {
         console.error("서버 리스트 가져오기 실패", error);
         setServerList([]); // 오류 발생 시 빈 배열로 설정

@@ -26,7 +26,6 @@ function CreateServerModal() {
 
 
     const handleCreateServer = async () => {
-        console.log(">>>>>>>> 유저정보 : " + userName )
         const formData = new FormData();
         formData.append("serverName", serverName);
         formData.append("userName", userName);
@@ -48,9 +47,7 @@ function CreateServerModal() {
                 }
             );
 
-            console.log(data);
             const serverId = data.id;
-            console.log("서버 생성 성공");
             navigate(`/main?server=${serverId}`, {
                 replace: true,
                 state: serverId,

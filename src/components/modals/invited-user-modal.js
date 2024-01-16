@@ -36,8 +36,6 @@ function InvitedUserModal() {
                     userEmail: userEmail,
                     serverId: serverIds
                 });
-                console.log('초대 성공:', response.data);
-                console.log('초대 성공:', serverId);
                 // 초대 성공 후 처리 로직
                 onClose();
             } catch (error) {
@@ -54,7 +52,6 @@ function InvitedUserModal() {
                     userEmail: resignUserEmail,
                     userId:userId
                 });
-                console.log('강퇴 성공:', response.data);
                 // 강퇴 성공 후 처리 로직
                 onClose();
 

@@ -15,7 +15,6 @@ const ChatHeader = ({isOpen, setOpen}) => {
             const response = await axios.get(
                 `${process.env.REACT_APP_API_URL}/channel/${channelId}`
             );
-            console.log(`채널 이름 조회 성공:`, response.data);
             setChannelName(response.data.data.channelName);
         } catch (error) {
             console.error(`채널 이름 조회 실패: ${error}`);

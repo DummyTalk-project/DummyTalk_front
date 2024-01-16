@@ -205,7 +205,6 @@ const ChatVoiceInputTest = () => {
         // gainNode.connect(destination);
         // console.log("필터적용");
         partnerAudio.current.srcObject = e.streams[0];
-        console.log(e.streams[0]);
         setOtherUserStream(e.streams[0]);
     };
 
@@ -215,11 +214,9 @@ const ChatVoiceInputTest = () => {
         if (!message.dest || socket.id === message.dest) return;
 
         if (message.type === "other-user") {
-            console.log('other-user');
             callUser(message.dest);
             otherUser.current = message.dest;
         } else if (message.type === "user-joined") {
-            console.log('user-joined');
             otherUser.current = message.dest;
 
             const welcomePayload = {
@@ -234,16 +231,12 @@ const ChatVoiceInputTest = () => {
 
             sendMessage(welcomePayload);
         } else if (message.type === "offer") {
-            console.log('offer');
             handleReceiveCall(message);
         } else if (message.type === "answer") {
-            console.log('answer');
             handleAnswer(message);
         } else if (message.type === "ice-candidate") {
-            console.log('ice-candidate');
             handleNewIceCandidate(message.data.candidate);
         } else if (message.type === "leave") {
-            console.log('leave');
             handlePeerDisconnected();
         }
     };
@@ -254,7 +247,6 @@ const ChatVoiceInputTest = () => {
 
         // 장치 변경 감지
         navigator.mediaDevices.ondevicechange = () => {
-            console.log("오디오 장치가 변경되었습니다.");
             requestMediaStream(); // 장치 변경 시 미디어 스트림을 다시 요청
         };
 
@@ -291,7 +283,6 @@ const ChatVoiceInputTest = () => {
                     id={"airplane-mode"}
                     checked={enabled}
                     onClick={() => {
-                        console.log(!enabled);
                         setEnabled((prev) => !prev);
                     }}
                     className={`${

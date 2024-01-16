@@ -28,7 +28,6 @@ const ChannelHeader = ({ server }) => {
     const [resignUser, setReSignUser] = useState('');
     const userId = userInfo.sub;
 
-    console.log("server ==>", server.id);
     const handleDelete = async () => {
         try {
             const response = await axios.delete(`${process.env.REACT_APP_API_URL}/server/delete?id=${server.id}&userId=${userId}`);

@@ -25,7 +25,6 @@ function Friends() {
       axios.get(`${process.env.REACT_APP_API_URL}/server/access/${serverId}`)
           .then(response => {
               setAccessUser(Array.isArray(response.data) ? response.data : []);
-              console.log("(서버에 초대된 유저 리스트 불러오기 성공 >>>>>>>>>>>>>> ", response)
           })
   }, [serverId]);
 
@@ -59,7 +58,6 @@ function Friends() {
                 id={"airplane-mode"}
                 checked={enabled}
                 onClick={() => {
-                    console.log(!enabled);
                     setEnabled((prev) => !prev);
                 }}
                 className={`${

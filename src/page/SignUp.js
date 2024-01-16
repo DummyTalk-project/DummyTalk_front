@@ -77,7 +77,6 @@ export default function SignUp() {
 
 
   const onClickTest = () =>{
-    console.log("haha")
   }
 
   if(accessToken){

@@ -46,9 +46,8 @@ const ChatInput = ({ userInfo }) => {
             `/topic/msg/${channelId}`,
             async (msg) => {
                 let result = JSON.parse(msg.body);
-                console.log("result   :", result);
 
-                if (enabled && result.chat.sender !== parseInt(userInfo?.sub)) {
+                if (enabled && result.chat.sender?.userId !== parseInt(userInfo?.sub)) {
                     const apiUrl = `${process.env.REACT_APP_API_URL}/chat/trans/${userInfo?.national_language}`;
                     const axiosConfig = {
                         url: apiUrl,
@@ -75,7 +74,6 @@ const ChatInput = ({ userInfo }) => {
                 { nation_language: userLanguage },
                 { headers: { 'Content-Type': 'application/json' } }
             );
-            console.log("summary 요청 성공:", response.data);
             setSummary(currentSummaryState => !currentSummaryState);
         } catch (error) {
             console.error("summary 요청 실패:", error.response || error.message, ">>>>>>", userLanguage);

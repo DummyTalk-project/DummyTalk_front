@@ -24,7 +24,6 @@ export const callGetNickname = () => {
                 'Accept': '*/*'
             },
         }).then(response => response.json());
-        console.log(result.data)
         dispatch({ type: GET_USER, payload: result.data });
     }
 }
@@ -39,7 +38,6 @@ export const callGetFriend = () => {
                 'Accept': '*/*'
             },
         }).then(response => response.json());
-        console.log(result.data)
         dispatch({ type: GET_FRIEND, payload: result.data });
     }
 }
@@ -54,7 +52,6 @@ export const callGetFriendRequest = () => {
                 'Accept': '*/*'
             },
         }).then(response => response.json());
-        console.log(result.data)
         dispatch({ type: GET_FRIEND_REQUEST, payload: result.data });
     }
 }
@@ -136,7 +133,6 @@ export const callFetchChatData = (channelId) => {
                 'Accept': '*/*'
             },
         }).then(response => response.json());
-        console.log(result.data)
         dispatch({ type: GET_FETCH_CHAT, payload: result.data });
     }
 }
@@ -151,7 +147,6 @@ export const callSearchData = () =>{
                 'Accept': '*/*'
             },
         }).then(response => response.json());
-        console.log(result.data)
         dispatch({ type: " 임시테스트 ", payload: result.data });
     }
 }

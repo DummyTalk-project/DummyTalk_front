@@ -72,8 +72,6 @@ const ImageSendModal = () => {
                     {"Content-Type": "multipart/form-data"}
                 );
 
-                console.log("업로드 성공:", response);
-
                 if (response?.status === 200) {
                     if (!isConnected || !response) return;
 
@@ -105,8 +103,6 @@ const ImageSendModal = () => {
         }
     };
 
-
-    console.log(isConnected)
     return (
         <Dialog
             open={isModalOpen}

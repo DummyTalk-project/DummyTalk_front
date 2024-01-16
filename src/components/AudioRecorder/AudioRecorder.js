@@ -69,7 +69,6 @@ const AudioRecorder = () => {
       setAudioUrl(e.data);
       setOnRec(true);
 
-      console.log(e);
 
       const formData = new FormData();
       formData.append("file", e.data)
@@ -95,7 +94,6 @@ const AudioRecorder = () => {
     });
 
     setDisabled(false);
-    console.log(sound);
   };
 
   const play = () => {

@@ -27,10 +27,8 @@ export const callPostSignUp = (user) => {
         if(result.status == "500"){
             dispatch({ type: POST_SIGN_UP, payload: result });
             alert(result.message)
-            // console.log(result);
         } else{
             dispatch({ type: POST_SIGN_UP, payload: result });
-            // console.log(resul3t);
             alert(result.message)
         }
     }
@@ -54,7 +52,6 @@ export const callPotLogin = (user) => {
         if(result.status == 200){
 
             window.localStorage.setItem('accessToken', result.data.accessToken); // key : value
-            console.log(localStorage.getItem('accessToken'))
             dispatch({ type: POST_LOGIN, payload: result });
             alert(result.message)
             window.location.reload();
@@ -79,11 +76,9 @@ export const callPostGoogleLogin = (credential) =>{
             body : JSON.stringify(credential)
         }).then(response => response.json());
 
-        console.log(result.data)
         if(result.status == 200){
 
             window.localStorage.setItem('accessToken', result.data.accessToken); // key : value
-            console.log(localStorage.getItem('accessToken'))
             dispatch({ type: POST_GOOGLE_LOGIN, payload: result });
             alert(result.message)
             window.location.reload();

@@ -42,7 +42,6 @@ function UserSetting() {
         `${process.env.REACT_APP_API_URL}/server/setting`,
         settings
       );
-      console.log(response.data);
     } catch (error) {
       console.log("서버 업데이트 오류", error);
     }

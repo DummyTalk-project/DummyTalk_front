@@ -19,16 +19,12 @@ const TextSearchComponent = () => {
 
         if (searchQuery === "") return;
 
-        console.log("searchQuery", searchQuery);
-
         setEnabled(true);
 
         try {
             const response = await axios.get(
                 `${process.env.REACT_APP_FASTAPI_URL}/api/search/text/${channelId}/${searchQuery}`// FastAPI 엔드포인트로 변경
             );
-
-            console.log("Response from FastAPI: ", response);
 
             if (response.status === 200) {
                 setUpdateData(response.data.chat); // 데이터 설정
@@ -49,8 +45,6 @@ const TextSearchComponent = () => {
             textSearchRequest();
         }
     };
-
-    console.log("error : ",error)
 
     return (
         <>

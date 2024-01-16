@@ -25,7 +25,6 @@ const CellComponent = () => {
             );
             setData(response.data.data);
 
-            console.log("이미지 response ", response.data);
         } catch (error) {
             console.error("이미지 리스트 뽑아보기 에러", error);
         }
@@ -70,12 +69,10 @@ const CellComponent = () => {
     }, [updateData, setData]);
 
     const imageSearchRequest = async () => {
-        console.log("searchQuery", searchQuery);
         try {
             const response = await axios.get(
                 `${process.env.REACT_APP_FASTAPI_URL}/api/image/search/${channelId}/${searchQuery}`// FastAPI 엔드포인트로 변경
             );
-            console.log("Response from FastAPI:   ", response);
             if (response.status === 200) {
                 setUpdateData(response.data.similar_images); // 데이터 설정
                 setSearchQuery(""); // 검색창 초기화

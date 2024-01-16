@@ -16,7 +16,6 @@ export const SocketProvider = ({ children }) => {
         const stomp = Stomp.over(sockJs, { debug: false });
 
         stomp.connect({}, function (frame) {
-            console.log("Connected: " + frame);
             let url = stomp.ws._transport.url;
             url = url.replace(`ws://${process.env.REACT_APP_WS_URL}`, "");
             url = url.replaceAll("/websocket", "");

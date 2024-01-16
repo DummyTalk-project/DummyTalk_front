@@ -111,7 +111,6 @@ const SignUpForm = () => {
   }
 
     const onClickTest = () =>{
-        console.log(data.data)
     }
 
 

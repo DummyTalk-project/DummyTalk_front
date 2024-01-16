@@ -47,9 +47,6 @@ const ChatItem = ({chat, channel, name}) => {
         setContext(false);
     };
 
-    console.log(chat)
-    console.log(parseInt(sub, 10) === chat?.sender)
-
     const [chosen, setChosen] = useState();
 
     const timestamp =

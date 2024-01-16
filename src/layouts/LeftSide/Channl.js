@@ -38,7 +38,6 @@ const Channels = () => {
                     `${process.env.REACT_APP_API_URL}/server/${serverId}/channel/list/${userId}`
                 );
                 setChannels(response.data);
-                console.log("채널 리스트 성공 >>>>>>>> : ", response.data);
             } catch (error) {
                 console.log("채널 리스트 실패 >>>>>>>> : ", error.message);
                 if(error.message == "Request failed with status code 404"){
@@ -63,8 +62,6 @@ const Channels = () => {
                         ? connectedUsers
                         : channel.connectedUsers,
             }));
-            console.log(`Joining Channel: ${channelId.name}`);
-            console.log(`Connected Users: ${connectedUsers.length}`);
             return updatedChannels;
         });
     };

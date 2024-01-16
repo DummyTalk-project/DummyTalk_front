@@ -58,7 +58,6 @@ const ChatMessages = ({ userInfo }) => {
         );
     
         setData(response.data.data);
-        console.log("response ", response.data);
       } catch (error) {
         console.error("채팅 리스트 뽑아보기 에러", error);
       }
@@ -69,7 +68,6 @@ const ChatMessages = ({ userInfo }) => {
   }, [channelId, userInfo, setData]);
 
 
-    console.log("test ======>" ,  data)
     // console.log("Tes2t ===> " , chatData)
 
     return  (

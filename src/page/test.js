@@ -34,7 +34,6 @@ const ChatComponent = () => {
 
             const errorOnMessage = (e) => {
                 const error = e.body;
-                console.log('Alarm Websocket - Error: ', error);
                 throw error;
             };
 
@@ -81,7 +80,6 @@ const ChatComponent = () => {
         const fetchChatData = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}/channel/chat/1`);
-                console.log(response);
                 // Handle the response data as needed
             } catch (error) {
                 console.error('채팅 리스트 뽑아보기 에러', error);
