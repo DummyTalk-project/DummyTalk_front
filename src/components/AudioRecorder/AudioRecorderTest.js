@@ -50,8 +50,8 @@ const AudioRecorderTest = ({ stream }) => {
     const vad = useMicVAD({
         workletURL: "/vad.worklet.bundle.min.js",
         modelURL: "/silero_vad.onnx",
-        positiveSpeechThreshold: 0.5,
-        negativeSpeechThreshold: 0.35,
+        positiveSpeechThreshold: 0.4,
+        negativeSpeechThreshold: 0.25,
         startOnLoad: false,
         stream: stream,
         minSpeechFrames: 16,

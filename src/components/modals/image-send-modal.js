@@ -78,7 +78,9 @@ const ImageSendModal = () => {
                     response.data.data.map((chat) => (
                         socket.send(`/app/${channelId}/message`
                             , JSON.stringify({
-                                sender: sub,
+                                sender: {
+                                    userId: sub
+                                },
                                 chatId: chat.chatId,
                                 channelId: channelId,
                                 nickname: chat.nickname,
